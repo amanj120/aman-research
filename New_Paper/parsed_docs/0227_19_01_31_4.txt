@@ -1,0 +1,4 @@
+half of all 340000 artificial intelligence based patents have been filed since 2013 according to a report published by the uns world intellectual property organization  wipo  .  key takeaways:
+  ibm has the largest portfolio of ai patents with  8k inventions followed by microsoft with  6k inventions
+  china represents 85% of the top 20 academic institutions involved in patenting ai
+  computer vision was the most popular ai application  used in self driving cars 

@@ -1,0 +1,1 @@
+facebook stored over 100m passwords in a human readable format .  the company found and announced the vulnerability after a routine security review .  the passwords were not accessible to anyone outside of facebook but were accessible and readable by facebook employees .  there is no evidence of abuse or improper access . 

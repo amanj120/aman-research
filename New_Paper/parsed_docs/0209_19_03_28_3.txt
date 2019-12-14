@@ -1,0 +1,1 @@
+boeing publicly shared its software fixes for the 737 max for the first time .  the proposed updates include making it easier for pilots to override the mcas system  i . e .  the anti stalling system that is suspected to have caused the fatal ethiopian and lion air crashes  and adds redundancy to the system by having it read data from two sensors instead of just one . 
