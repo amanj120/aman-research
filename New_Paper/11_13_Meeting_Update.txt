@@ -1,0 +1,40 @@
+Here's what I worked on this week:
+
+I modified how I constructed the tensor, and the PMI values I got fell in the range (2,19), which seems about right given the data I have.
+
+There are ~7500 distinct words, and ~36000 total words. This suggests that a lot of words only show up once or twice in the entire sample, and a few word sow up very frequently. On average though, a word shows up in the entire sample about 4.8 times. This might partially be because of different forms of the word exisiting (i.e plane and planes and plane's and planes' all kind of mean the same thing, but account for four different words)
+
+The average sentence length was ~11.7 words, and each document had on average 3 sentences, so there were, on average, 3 * 12^2/2 ~ 216 pairs
+
+Furthermore, 97% of pairs showed up only once in each document
+
+thus, ln(p(x,y,z)/p(x)p(y)) -- I omitted p(z) because it was constant -- is approximately
+
+ln((1/216)/(5/36000)(5/36000)) ~ 12.4
+
+In practice, we see that our average PMI value was 10.4 with a standard deviation of 2.2
+
+Also, our values are normally distributed, so we should expect ~68% of our data to fall within
+1 standard deviation, and 67.3% of our actual data does fall within the range [8.2,12.6]
+
+This leads me to believe that CP_APR would not be a good candidate for decomposition because:
+
+    a) Simply having an absolute value of the counts does not carry the same level of information as the PMI. The PMI gives importance to words that are rarer, suggesting that a document has a lot of importance dependent on which rare words it contains. This makes sense, because if a document contains the (rare) words 'bolivian' and 'parliament', that specific combination probably gives us more insight into the topic of that document over more common words like 'government' and 'democracy'. An absolute count gives common words and rare words the same importance, and that conveys different information. An absolute count of word pairs is probably worse than doing a simple Bag Of Words method, because at least with that, you can run a regular SVD and do clustering from that.
+
+    b) Doing CP_APR on our PMI Tesnor would not work well. According to this paper (https://arxiv.org/abs/1112.2414), the key difference between CP_ALS and CP_APR is that during the calculation of the error function, CP_ALS makes the assumption that the underlying data is normally distributed, whereas CP_APR assumes the data follows a poisson distribution. However, our PMI data is normally distributed, as shown above.
+
+After constructing the new tensor using PMI, I ran a CP_ALS decomposition on it, and still only got about 4% fit once it was all said and done. This prompted me to look into other methods of tensor decomposition, and I came across this paper:
+
+https://arxiv.org/pdf/1502.01425.pdf
+
+This outlines a method called Tensor Truncated Power method, which is similar to CP_ALS, but has a truncation step during the 'tensor power iteration' step, which only picks the s largest nonzero values, and sets the rest of the values to 0. This allegedly promotes a sparse tensor structure.
+
+I still don't fully understand the algorithm, or if it actually pertains to the problem we are trying to solve (namely, decomposing large, sparse tensors with less than 0.001% of values being non-zero), but it seems promising.
+
+Moving forward to next week, I want to:
+
+1) Construct randomized tensors with the same shape but varying levels of sparsity, and see how CP_ALS performs in relation to the sparsity level.
+
+2) Understand how this TTP method works, figure out if it's actually usefule, and see if an implementation of it exists.
+
+3) Concerning this dataset I have right now, I want to preprocess it a little further and see if I can group together similar words, and see how that affects the values in the tensor and how it affects decomposition.
