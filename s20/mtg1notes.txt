@@ -1,0 +1,7 @@
+figure out how to implement some type of CP Decomposition on sparse matrices, dense matrices, small matrices and large matrices in python/C.
+
+figure out what went wrong with last semester.
+
+maybe read the book a little bit more, implement your own version of key sentence extracter and the numeric character analyzer
+
+LU Decomposition is the same as Floyd Warshall? 
